@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI PDF Chatbot</title>
+
+    <link rel="stylesheet" href="/static/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="app-container">
+
+        <header class="top-bar">
+            <div>
+                <h1>AI PDF Chatbot</h1>
+                <p>Chat with your uploaded PDF documents</p>
+            </div>
+
+            <div class="status-box">
+                <span class="status-dot"></span>
+                <span id="status">Waiting for data...</span>
+            </div>
+        </header>
+
+        <section class="upload-panel">
+            <input
+                type="file"
+                id="pdf-input"
+                multiple
+                accept=".pdf"
+                hidden
+            >
+
+            <button
+                onclick="document.getElementById('pdf-input').click()"
+                class="primary-btn"
+            >
+                Select PDFs
+            </button>
+
+            <button
+                id="upload-btn"
+                class="primary-btn index-btn"
+            >
+                Index Doc
+            </button>
+        </section>
+
+        <section class="chat-wrapper">
+
+            <div id="chat-box" class="chat-box">
+                <div class="message bot">
+                    Upload your PDF files and start asking questions.
+                </div>
+            </div>
+
+            <div class="input-area">
+                <input
+                    type="text"
+                    id="query-input"
+                    placeholder="Ask a question from uploaded PDFs..."
+                >
+
+                <button id="send-btn" class="send-btn">
+                    Send
+                </button>
+            </div>
+
+        </section>
+
+    </div>
+
+    <script src="/static/logic.js"></script>
+</body>
+</html>
