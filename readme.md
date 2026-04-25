@@ -52,17 +52,16 @@ Flow:
 - **PDF Parsing:** PyMuPDF (fitz)
 - **Embeddings:** SentenceTransformers
 - **Vector Store:** FAISS
-- **LLM:** Gemini (gemini-3-flash-preview)
+- **LLM:** Gemini (gemini-3-flash-preview) + other fallback models
 
 ---
 
 ## 📁 Project Structure
 
 ```
-AI CHATBOT
-│   app_gradio.py   --- │\  OPTION 1
-│   app_fastapi.py  --- │/  OPTION 2
-│   readme.md
+AI CHATBOT 
+├── readme.md
+├── app_fastapi.py 
 │
 ├── generator/
 │   └── generator.py
@@ -70,14 +69,12 @@ AI CHATBOT
 ├── retriever/
 │   └── retriever.py
 │
-├── static/
-│   ├── logic.js
-│   └── style.css
-│
-├── templates/
-│   └── index.html
-│
-└── temp_pdfs/        # ignored via .gitignore
+└──static/
+   └── index.html
+   ├── logic.js
+   └── style.css
+
+
 ```
 
 ---
@@ -124,22 +121,15 @@ export GEMINI_API_KEY=your_api_key_here
 
 STEP 1 : Go to `AI CHATBOT` in terminal:
 
-**Method1 : app-gradio (built in ui)**
-```bash
-uvicorn app_gradio:app --host 0.0.0.0 --port 7860
-```
 
-**Method2 : app-fastapi (custom html css js)**
 ```bash
 uvicorn app_fastapi:app --host 0.0.0.0 --port 7860 
 ```
 
 ## Screenshots
 
-### Method 1 : Gradio built interface
-<img src="screenshots/pic-gradio.png" width="800" />
 
-### Method 2 : FastAPI built custom interface
+### frontend UI : FastAPI built custom interface
 <img src="screenshots/pic-fastapi.png" width="800" />
 
 

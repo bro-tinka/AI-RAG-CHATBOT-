@@ -5,12 +5,11 @@ from sentence_transformers import SentenceTransformer
 from collections import deque
 import os
 
-
-# STRUCTURE
-# PDF RETRIEVAL PIPELINE
-#       INIT
-#       INGEST_PDF
-#       RETRIEVE
+###
+# Objective : Ingest, Chunk, Retreive 
+# 1 ) Ingest the pdf 
+# 2 ) Chunk it & store in vectore store
+# 2 ) Retrieve the chunks from vector Store using similarity Search
 
 class PDFRetrievalPipeline:
     def __init__(self, model_name="all-MiniLM-L6-v2"):
