@@ -1,67 +1,46 @@
-import os
-from google import genai
-
-# client get api key from : environment variable `GEMINI_API_KEY`
-
-#MODELS YOU CAN USE 
-model1 =  "gemini-flash-latest"
-model2 =  "gemini-pro-latest"
-model3 =  "gemini-flash-lite-latest"
+import requests
 
 class LLMGenerator:
-    def __init__(self, api_key=None, model_name = "gemini-2-nano-2"):
-        api_key = os.getenv("GEMINI_API_KEY")
-        if not api_key:
-            raise ValueError("GEMINI_API_KEY daalo bhai!")
-        self.client = genai.Client(api_key=api_key)
-        
+    def __init__(self):
+        self.ollama_url = "http://localhost:11434/api/generate"
 
     def generate_answer(self, query, context):
-
+       
         prompt = f"""
-                You are a helpful AI assistant.
-                Answer the question strictly using the context below.
-                If the answer is not present in the context, reply and say: "I don't have enough information from the uploaded PDF(s)."
+            You are a helpful AI assistant.
 
-                Context:
-                {context}
+            Use the context to answer the question.
+            If the answer is partially available, try to infer reasonably.
+            Only say "I don't have enough information" if absolutely nothing relevant exists.
 
-                Question:
-                {query}
+            Context:
+            {context}
 
-                """
-
+            Question:
+            {query}
+            """
         try:
-            response = self.client.models.generate_content(
-                    model=model1, 
-                    contents=prompt
-                    )
-            print("answered by model:",{model1})
-            return response.text
-            
-        except Exception as e:
-            print("Model 1 failed : ",e)
+            response = requests.post(
+                self.ollama_url,
+                json={
+                    "model": "qwen2.5:3b",
+                    "prompt": prompt,
+                    "stream": False
+                },
+                timeout=30
+            )
 
-        try:
-            response = self.client.models.generate_content(
-                    model=model2,
-                    contents=prompt
-                    )
-            print("answered by model:",{model2})
-            return response.text
-            
-        except Exception as e:
-            print("Model 2 failed : ",e)
+            if response.status_code == 200:
+                data = response.json()
+                answer = data.get("response", "").strip()
 
-        try:
-            response = self.client.models.generate_content(
-                    model=model3, 
-                    contents=prompt
-                    )
-            print("answered by model:",{model3})
-            return response.text
-            
-        except Exception as e:
-            print("Model 3 failed : ",e)
+                if answer:
+                    print("Answered by local LLM (Ollama)")
+                    return answer
 
-        return "LLMs are under heavy load! Please try later!"
+                return "Local model returned empty response."
+
+            return f"Local LLM request failed: {response.status_code}"
+
+        except Exception as e:
+            return f"Local LLM (Ollama) error: {str(e)}"

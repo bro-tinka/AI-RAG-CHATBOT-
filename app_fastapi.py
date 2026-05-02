@@ -42,6 +42,7 @@ async def ask_question(query: str = Form(...)):
         return {"answer": "❌ Error: System offline. Please upload PDFs first."}
     
     context = pipeline.retrieve(query)
+    print(context)
     answer = generator.generate_answer(query, context)
     return {"answer": answer}
 
