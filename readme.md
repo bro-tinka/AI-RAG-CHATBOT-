@@ -2,7 +2,7 @@
 
 A Retrieval-Augmented Generation (RAG) based AI chatbot that allows users to upload multiple PDF documents and ask natural language questions over them. The system retrieves relevant text chunks using vector search and generates grounded answers using an LLM.
 
-To check Project Demo [Click Here](https://huggingface.co/spaces/bro-tinka/AiPdfChatbot_Version2)
+To check Project Demo [Click Here](https://huggingface.co/spaces/bro-tinka/aichatbot)
 
 ---
 
